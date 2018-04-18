@@ -13,7 +13,7 @@
                 <div class="card">
                     <div class="header">
                         <h2>
-                            TRAINING DATAS
+                            Words
                             <% if (success.length > 0) { %>
                                 <small>Message <code> <%= success %></code></small>
                             <% } %>
@@ -35,8 +35,10 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>User says</th>
-                                    <th>Bot says</th>
+                                    <th>Japan character</th>
+                                    <th>Meanings</th>
+                                    <th>Kanji</th>
+                                    <th>Level</th>
                                     <th>Control</th>
                                 </tr>
                             </thead>
@@ -45,8 +47,10 @@
                                     <tr>
                                     
                                         <th></th>
-                                        <td><%= data.input %></td>
-                                        <td><%= data.output %></td>
+                                        <td><%= data.character%></td>
+                                        <td><%= data.meanings %></td>
+                                        <td><%= data.kanji %></td>
+                                        <td><%= data.level %></td>
                                         <td>
                                             <a href="/datas/<%= data.slug %>" class="btn btn-sm btn-primary">View</a>
                                             <a href="/datas/<%= data.slug %>/edit" class="btn btn-sm btn-primary">Edit</a>
