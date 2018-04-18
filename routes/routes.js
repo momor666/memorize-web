@@ -14,20 +14,6 @@ module.exports = function(app, passport) {
 	
     app.get('/console', isLoggedIn, mainController.showDashboard);
 	
-    app.get('/datas', isLoggedIn, dataController.showDatas);
-    
-    app.get('/datas/seed', isLoggedIn, dataController.seedDatas);
-    
-    app.get('/datas/create', isLoggedIn, dataController.showCreate);
-    app.post('/datas/create', isLoggedIn, dataController.processCreate);
-    
-    app.get('/datas/:slug/edit', isLoggedIn, dataController.showEdit);
-    app.post('/datas/:slug', isLoggedIn, dataController.processEdit);
-    
-    app.get('/datas/:slug/delete', isLoggedIn, dataController.deleteData);
-    
-    app.get('/datas/:slug', isLoggedIn, dataController.showSingle);
-    
     app.get('/words', isLoggedIn, wordController.showWords);
     
     app.get('/words/seed', isLoggedIn, wordController.seedWords);

@@ -60,7 +60,7 @@ module.exports = {
   },
   
   showCreate(req, res) {
-    res.render('word-create', {
+    res.render('create', {
       user : req.user,
       errors: req.flash('errors')
     });

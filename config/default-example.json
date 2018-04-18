@@ -1,9 +1,4 @@
 {
-    "appSecret": "",
-    "pageAccessToken": "",
-    "validationToken": "",
-    "serverURL": "",
-    "webhookURL": "",
     "SECRET": "",
-    "DB_URI": ""
+    "DB_JISHO": ""
 }

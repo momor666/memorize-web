@@ -12,10 +12,10 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
                     <div class="header">
-                        <h2>Create data</h2>
+                        <h2>Create word</h2>
                         <ul class="header-dropdown m-r--5">
                             <li class="dropdown">
-                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <a href="javascript:void(0);" class="dropdown-toggle" word-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                     <i class="material-icons">more_vert</i>
                                 </a>
                                 <ul class="dropdown-menu pull-right">
@@ -33,21 +33,32 @@
                     <% } %>
                     
                     <div class="body">
-                        <form id="form_validation" action="/datas/create" method="POST">
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input type="text" class="form-control" name="input" required>
-                                    <label class="form-label">User says</label>
-                                </div>
-                            </div>
+                        <form id="form_validation" action="/words/create" method="POST">
                             
                             <div class="form-group form-float">
                                 <div class="form-line">
-                                    <textarea name="output" cols="30" rows="5" class="form-control no-resize" required></textarea>
-                                    <label class="form-label">Bot says</label>
+                                    <input type="text" class="form-control" name="character" required>
+                                    <label class="form-label">Japan character</label>
                                 </div>
                             </div>
-                            
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input type="text" class="form-control" name="meanings" required>
+                                    <label class="form-label">Meanings</label>
+                                </div>
+                            </div>
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input type="text" class="form-control" name="kanji" required>
+                                    <label class="form-label">Kanji</label>
+                                </div>
+                            </div>
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <input type="text" class="form-control" name="level" required>
+                                    <label class="form-label">Level</label>
+                                </div>
+                            </div>
                             <button class="btn btn-primary waves-effect" type="submit">Create</button>
                         </form>
                     </div>
