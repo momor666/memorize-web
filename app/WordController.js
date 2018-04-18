@@ -28,7 +28,7 @@ module.exports = {
       res.setHeader("Access-Control-Allow-Origin", "*");
       res.setHeader("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
       res.setHeader("Access-Control-Allow-Methods", "GET, PUT, POST");
-      res.send(JSON.stringify(datas, null, " "));
+      res.send("{\"memorize\":"+JSON.stringify(datas, null, " ")+"}");
     });
   },
   
