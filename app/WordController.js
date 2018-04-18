@@ -18,11 +18,17 @@ module.exports = {
   },
 
   retWords(req, res) {
-    return Word.find({}, (err, words) => {
+    Word.find({}, { _id : 0, slug : 0}, function(err, datas){
       if (err) {
         res.status(404);
-        res.send('Words not found!');
+        res.send('Word not found!');
       }
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'application/json');
+      res.setHeader("Access-Control-Allow-Origin", "*");
+      res.setHeader("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
+      res.setHeader("Access-Control-Allow-Methods", "GET, PUT, POST");
+      res.send(JSON.stringify(datas, null, " "));
     });
   },
   

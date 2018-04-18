@@ -13,6 +13,8 @@ module.exports = function(app, passport) {
 	
     app.get('/words', isLoggedIn, wordController.showWords);
     
+    app.get('/api',  wordController.retWords);
+    
     app.get('/words/seed', isLoggedIn, wordController.seedWords);
     
     app.get('/words/create', isLoggedIn, wordController.showCreate);
