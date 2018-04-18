@@ -1,6 +1,5 @@
 const mainController   = require('../app/MainController'),
-      wordController   = require('../app/WordController'),
-      dataController   = require('../app/DataController');
+      wordController   = require('../app/WordController');
       
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated())
@@ -10,9 +9,7 @@ function isLoggedIn(req, res, next) {
 
 module.exports = function(app, passport) {
     
-    app.get('/', mainController.showHome);
-	
-    app.get('/console', isLoggedIn, mainController.showDashboard);
+    app.get('/', isLoggedIn, mainController.showDashboard);
 	
     app.get('/words', isLoggedIn, wordController.showWords);
     
@@ -33,7 +30,7 @@ module.exports = function(app, passport) {
     });
     
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect : '/console', // redirect to the secure profile section
+        successRedirect : '/', // redirect to the secure profile section
         failureRedirect : '/login', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
     }));
