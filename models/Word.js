@@ -14,7 +14,7 @@ const wordSchema = new Schema({
   }
 });
 wordSchema.pre('save', function(next) {
-  this.slug = slugutf(this.input, slugutf.defaults.modes['rfc3986'] = {
+  this.slug = slugutf(this.meanings, slugutf.defaults.modes['rfc3986'] = {
       replacement: '-',      // replace spaces with replacement 
       symbols: true,         // replace unicode symbols or not 
       remove: null,          // (optional) regex to remove characters 

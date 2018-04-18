@@ -43,18 +43,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <% for (var data of datas) { %>
+                                <% for (var word of words) { %>
                                     <tr>
                                     
                                         <th></th>
-                                        <td><%= data.character%></td>
-                                        <td><%= data.meanings %></td>
-                                        <td><%= data.kanji %></td>
-                                        <td><%= data.level %></td>
+                                        <td><%= word.character%></td>
+                                        <td><%= word.meanings %></td>
+                                        <td><%= word.kanji %></td>
+                                        <td><%= word.level %></td>
                                         <td>
-                                            <a href="/datas/<%= data.slug %>" class="btn btn-sm btn-primary">View</a>
-                                            <a href="/datas/<%= data.slug %>/edit" class="btn btn-sm btn-primary">Edit</a>
-                                            <a href="/datas/<%= data.slug %>/delete" class="btn btn-sm btn-danger">Delete</a>
+                                            <a href="/words/<%= word.slug %>/edit" class="btn btn-sm btn-primary">Edit</a>
+                                            <a href="/words/<%= word.slug %>/delete" class="btn btn-sm btn-danger">Delete</a>
                                         </td>
                                     </tr>
                                 <% } %>
