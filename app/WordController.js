@@ -18,7 +18,7 @@ module.exports = {
   },
 
   retWords(req, res) {
-    Word.find({}, { _id : 0, slug : 0}, function(err, datas){
+    Word.find({}, { _id : 0, slug : 0, __v : 0}, function(err, datas){
       if (err) {
         res.status(404);
         res.send('Word not found!');
