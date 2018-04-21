@@ -1,5 +1,5 @@
 {
-  "name": "techstar-platform",
+  "name": "jisho",
   "version": "0.5.5",
   "description": "Jisho",
   "author": "Tortuvshin Byambaa",
@@ -10,7 +10,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/techstar-cloud/jisho-node.git"
+    "url": "git+https://github.com/techstar-cloud/jisho-web.git"
   },
     
   "main": "app.js",
