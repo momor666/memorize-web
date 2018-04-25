@@ -33,30 +33,71 @@
                     <div class="body">
                         <form id="form_validation" action="/words/<%= word.slug %>" method="POST">
                             
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input type="text" class="form-control" name="character" value="<%= word.character %>" required>
-                                    <label class="form-label">Japan character</label>
+                            <div class="col-sm-6">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <input type="text" class="form-control" name="character" value="<%= word.character %>" required>
+                                        <label class="form-label">Japan character</label>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input type="text" class="form-control" name="meanings" value="<%= word.meanings %>" required>
-                                    <label class="form-label">Meanings</label>
+                            <div class="col-sm-6">
+                            
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <input type="text" class="form-control" name="kanji" value="<%= word.kanji %>">
+                                        <label class="form-label">Kanji</label>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input type="text" class="form-control" name="kanji" value="<%= word.kanji %>" required>
-                                    <label class="form-label">Kanji</label>
+                            <div class="col-sm-6">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <input type="text" class="form-control" name="meanings" value="<%= word.meanings %>" required>
+                                        <label class="form-label">Meanings English</label>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group form-float">
-                                <div class="form-line">
-                                    <input type="text" class="form-control" name="level" value="<%= word.level %>" required>
-                                    <label class="form-label">Level</label>
+                            
+                            <div class="col-sm-6">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <input type="text" class="form-control" name="meaningsMongolia" value="<%= word.meaningsMongolia %>" required>
+                                        <label class="form-label">Meanings Mongolia</label>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="col-sm-6">
+                             
+                                    <div class="form-group form-float">
+                                        <select class="form-control show-tick" name="partOfSpeech">
+                                            <option value="">Part of speech</option>
+                                            <option value="Nouns">Nouns</option>
+                                            <option value="Pronouns">Pronouns</option>
+                                            <option value="Na-adjectives">Na-adjectives</option>
+                                            <option value="Verbs">Verbs</option>
+                                            <option value="I-adjectives">I-adjectives</option>
+                                            <option value="Particles">Particles</option>
+                                            <option value="Adverbs">Adverbs</option>
+                                            <option value="Conjuctions">Conjuctions</option>
+                                            <option value="Interjections">Interjections</option>
+                                        </select>
+                                    </div>
+                                </div>    
+                                
+                                <div class="col-sm-6">
+                            
+                                    <div class="form-group form-float">
+                                         <select class="form-control show-tick" name="level">
+                                            <option value="">Level</option>
+                                            <option value="jlpt n5">N5</option>
+                                            <option value="jlpt n4">N4</option>
+                                            <option value="jlpt n3">N3</option>
+                                            <option value="jlpt n2">N2</option>
+                                            <option value="jlpt n1">N1</option>
+                                        </select>
+                                    </div>
+                                </div>
                             <button class="btn btn-primary waves-effect" type="submit">Update</button>
                         </form>
                     </div>
