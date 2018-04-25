@@ -6,8 +6,18 @@ const mongoose = require('mongoose'),
 const wordSchema = new Schema({
   character: String,
   meanings: String,
+  meaningsMongolia: String,
+  partOfSpeech: String, // adj, verb, etc
   kanji: String,
-  level: String,
+  level: String, // jlpt n1, jlpt n2 
+  isMemorize: { 
+    Boolean, 
+    default: false 
+  },
+  created: { 
+    type: Date, 
+    default: Date.now 
+  },
   slug: {
     type: String,
     unique: true

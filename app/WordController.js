@@ -84,10 +84,11 @@ module.exports = {
     const word = new Word({
       character: req.body.character,
       meanings: req.body.meanings,
+      meaningsMongolia: req.body.meaningsMongolia,
+      partOfSpeech: req.body.partOfSpeech,
       kanji: req.body.kanji,
       level: req.body.level
     });
-  
     word.save((err) => {
       if (err)
         throw err;
@@ -117,8 +118,11 @@ module.exports = {
     Word.findOne({ slug: req.params.slug }, (err, word) => {
       word.character = req.body.character;
       word.meanings = req.body.meanings;
+      word.meaningsMongolia = req.body.meaningsMongolia;
+      word.partOfSpeech = req.body.partOfSpeech;
       word.kanji = req.body.kanji;
       word.level = req.body.level
+ 
       word.save((err) => {
         if (err)
           throw err;
