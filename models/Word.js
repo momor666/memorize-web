@@ -10,8 +10,12 @@ const wordSchema = new Schema({
   partOfSpeech: String, // adj, verb, etc
   kanji: String,
   level: String, // jlpt n1, jlpt n2 
+  isFavorite: { 
+    type: Boolean, 
+    default: false 
+  },
   isMemorize: { 
-    Boolean, 
+    type: Boolean, 
     default: false 
   },
   created: { 
