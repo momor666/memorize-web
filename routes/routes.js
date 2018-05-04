@@ -17,6 +17,8 @@ module.exports = function(app, passport) {
     
     app.get('/words/seed', isLoggedIn, wordController.seedWords);
     
+    app.get('/words/count', isLoggedIn, wordController.wordCount);
+    
     app.get('/words/create', isLoggedIn, wordController.showCreate);
     app.post('/words/create', isLoggedIn, wordController.processCreate);
     
@@ -26,6 +28,7 @@ module.exports = function(app, passport) {
     app.get('/words/:slug/delete', isLoggedIn, wordController.deleteWord);
     
     app.get('/words/:slug', isLoggedIn, wordController.showSingle);
+
 
     app.get('/login', function(req, res) {
         res.render('login.ejs', { message: req.flash('loginMessage') }); 
