@@ -87,7 +87,7 @@
                                         <td><%= word.partOfSpeech %></td>
                                         <td><%= word.kanji %></td>
                                         <td><%= word.level %></td>
-                                        <td><%= word.created %></td>
+                                        <td><%= word.created.toUTCString() %></td>
                                         <td>
                                             <a href="/words/<%= word.slug %>/edit" class="btn btn-sm btn-primary">Edit</a>
                                             <a href="/words/<%= word.slug %>/delete" class="btn btn-sm btn-danger">Delete</a>
