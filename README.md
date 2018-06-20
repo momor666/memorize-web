@@ -17,11 +17,15 @@ Japanese-English-Mongolian translator web app.
 
 ### Install 
 
-Clone repository `git clone https://github.com/techstar-cloud/memorize-web.git`
-
-`cd memorize-web`
+Clone repository `git clone https://github.com/techstar-cloud/memorize-web.git && cd memorize-web`
 
 Install dependencies `npm install`
+
+Copy `default-example.json` to `default.json`
+
+Database URL and paste it into the `DB_JISHO`
+
+Add `SECRET=<session-secret>`
 
 Start up your game by running node `node app.js` 
 
