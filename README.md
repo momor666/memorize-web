@@ -44,7 +44,7 @@ or translating any document here to your language. [Find more information in CON
 
 Memorize is open-sourced software licensed under the [MIT](LICENSE).
 
-**[⬆ back to top](#intelligo-game)**
+**[⬆ back to top](#memorize)**
 
 [Requirements]:#requirements
 [Install]:#install
