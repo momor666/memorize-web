@@ -3,6 +3,7 @@ const Word = require('../models/Word');
 module.exports = {
     
     showDashboard(req, res) {
+    
         Word.find({}, (err, words) => {
           if (err) {
             res.status(404);
@@ -10,12 +11,13 @@ module.exports = {
           }
       
           res.render('dashboard', { 
+            total: words.length,
             words: words,
             user : req.user,
             success: req.flash('success')
           });
         });
     }
-    
+   
 };
 

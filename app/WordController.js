@@ -146,7 +146,7 @@ module.exports = {
     });
   },
   
-   wordCount(req, res) {
+  wordCount(req, res) {
     Word.count({}, function(error, numOfDocs) {  
       res.send('Word count '+numOfDocs);
     });
