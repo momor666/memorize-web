@@ -85,6 +85,7 @@ module.exports = {
     const errors = req.validationErrors();
     if (errors) {
       req.flash('errors', errors.map(err => err.msg));
+      res.send(errors.map(err => err.msg));
       return res.redirect('/words/create');
     }
     const word = new Word({
@@ -96,11 +97,14 @@ module.exports = {
       level: req.body.level
     });
     word.save((err) => {
-      if (err)
+      if (err) {
         throw err;
+        res.send('Error!');
+      }
       req.flash('success', 'Successfuly created word!');
       res.redirect(`/words`);
     });
+  
   },
   
   showEdit(req, res) {
