@@ -32,6 +32,25 @@ module.exports = {
     });
   },
   
+  apiCreate(req, res) {
+
+    const word = new Word({
+      character: req.body.character,
+      meanings: req.body.meanings,
+      meaningsMongolia: req.body.meaningsMongolia,
+      partOfSpeech: req.body.partOfSpeech,
+      kanji: req.body.kanji,
+      level: req.body.level
+    });
+    
+    word.save((err) => {
+      if (err) {
+        res.json({ message: '0' });
+      }
+      res.json({ message: '1' });
+    });
+  },
+  
   showSingle(req, res) {
     Word.findOne({ slug: req.params.slug }, (err, word) => {
       if (err) {
@@ -79,17 +98,15 @@ module.exports = {
   },
   
   processCreate(req, res) {
-    // req.checkBody('character', 'Character is required.').notEmpty();
-    // req.checkBody('meanings', 'Meanings is required.').notEmpty();
+    req.checkBody('character', 'Character is required.').notEmpty();
+    req.checkBody('meanings', 'Meanings is required.').notEmpty();
    
-    // const errors = req.validationErrors();
-    // if (errors) {
-    //   req.flash('errors', errors.map(err => err.msg));
-    //   return res.redirect('/words/create');
-    // }
+    const errors = req.validationErrors();
+    if (errors) {
+      req.flash('errors', errors.map(err => err.msg));
+      return res.redirect('/words/create');
+    }
     
-    console.info(req.body);
-   
     const word = new Word({
       character: req.body.character,
       meanings: req.body.meanings,

@@ -15,7 +15,7 @@ module.exports = function(app, passport) {
     
     app.get('/api/words',  wordController.retWords);
         
-    app.post('/api/word/create', wordController.processCreate);
+    app.post('/api/word/create', wordController.apiCreate);
     
     app.get('/words/seed', isLoggedIn, wordController.seedWords);
     
