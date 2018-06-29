@@ -1,11 +1,16 @@
 ## Memorize
 
 Japanese-English-Mongolian translator web app.
-- Android app [repository](https://github.com/techstar-cloud/memorize)
-- Chrome extension [repository](https://github.com/techstar-cloud/memorize-extention)
 
 | [Requirements][] | [Install][] | [Author][] | [Contributors][] | [License][] |
 |---|---|---|---|---|
+
+### Related projects
+
+* Android app [repository](https://github.com/techstar-cloud/memorize)
+
+* Chrome extension [repository](https://github.com/techstar-cloud/memorize-extention)
+
 
 ### Requirements
 
