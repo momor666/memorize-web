@@ -79,15 +79,17 @@ module.exports = {
   },
   
   processCreate(req, res) {
-    req.checkBody('character', 'Character is required.').notEmpty();
-    req.checkBody('meanings', 'Meanings is required.').notEmpty();
-  
-    const errors = req.validationErrors();
-    if (errors) {
-      req.flash('errors', errors.map(err => err.msg));
-      res.send(errors.map(err => err.msg));
-      return res.redirect('/words/create');
-    }
+    // req.checkBody('character', 'Character is required.').notEmpty();
+    // req.checkBody('meanings', 'Meanings is required.').notEmpty();
+   
+    // const errors = req.validationErrors();
+    // if (errors) {
+    //   req.flash('errors', errors.map(err => err.msg));
+    //   return res.redirect('/words/create');
+    // }
+    
+    console.info(req.body);
+   
     const word = new Word({
       character: req.body.character,
       meanings: req.body.meanings,
@@ -99,12 +101,10 @@ module.exports = {
     word.save((err) => {
       if (err) {
         throw err;
-        res.send('Error!');
       }
-      req.flash('success', 'Successfuly created word!');
+      
       res.redirect(`/words`);
     });
-  
   },
   
   showEdit(req, res) {
