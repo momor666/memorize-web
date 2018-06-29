@@ -1,0 +1,22 @@
+{
+  "name": "INTELLIGO Game",
+  "description": "Augmented reality and Virtual reality game",
+  "repository": "https://github.com/techstar-cloud/memorize-web.git",
+  "image": "heroku/nodejs",
+  "env": {
+    "SECRET": {
+      "description": "A secret key for verifying the integrity of signed cookies.",
+      "generator": "secret"
+    },
+    "DB_JISHO": {
+      "description": "MongoDB url"
+    }
+  },
+  "addons": [
+    "openredis",
+    {
+      "plan": "mongolab:shared-single-small",
+      "as": "MONGO"
+    }
+  ]
+}
