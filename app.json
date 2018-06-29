@@ -1,6 +1,6 @@
 {
-  "name": "INTELLIGO Game",
-  "description": "Augmented reality and Virtual reality game",
+  "name": "Memorize app web",
+  "description": "Memorize app web",
   "repository": "https://github.com/techstar-cloud/memorize-web.git",
   "image": "heroku/nodejs",
   "env": {
@@ -13,10 +13,6 @@
     }
   },
   "addons": [
-    "openredis",
-    {
-      "plan": "mongolab:shared-single-small",
-      "as": "MONGO"
-    }
+    "plan": "mongolab:shared-single-small"
   ]
 }
