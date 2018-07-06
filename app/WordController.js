@@ -51,6 +51,30 @@ module.exports = {
     });
   },
   
+  createMulti(req, res) {
+    
+    for(var item of req.body) {
+      if (req.body.hasOwnProperty(item)) {
+        const word = new Word({
+          character: req.body[item].character,
+          meanings: req.body[item].meanings,
+          meaningsMongolia: req.body[item].meaningsMongolia,
+          partOfSpeech: req.body[item].partOfSpeech,
+          kanji: req.body[item].kanji,
+          level: req.body[item].level
+        });
+        
+        word.save((err) => {
+          if (err) {
+            res.json({ message: '0' });
+          }
+          res.json({ message: '1' });
+        });
+      }
+    }
+    
+  },
+  
   showSingle(req, res) {
     Word.findOne({ slug: req.params.slug }, (err, word) => {
       if (err) {

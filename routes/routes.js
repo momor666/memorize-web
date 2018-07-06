@@ -17,6 +17,8 @@ module.exports = function(app, passport) {
         
     app.post('/api/word/create', wordController.apiCreate);
     
+    app.post('/api/multi/create', wordController.createMulti);
+    
     app.get('/words/seed', isLoggedIn, wordController.seedWords);
     
     app.get('/words/count', isLoggedIn, wordController.wordCount);
