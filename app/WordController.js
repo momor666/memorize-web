@@ -68,11 +68,35 @@ module.exports = {
           if (err) {
             res.json({ message: '0' });
           }
-          res.json({ message: '1' });
         });
       }
     }
     
+    res.json({ message: '1' });
+  },
+  
+  multiEdit(req, res) {
+    
+    for(var item of req.body) {
+      if (req.body.hasOwnProperty(item)) {
+        Word.findOne({ slug: req.body[item].slug }, (err, word) => {
+          word.character = req.body[item].character;
+          word.meanings = req.body[item].meanings;
+          word.meaningsMongolia = req.body[item].meaningsMongolia;
+          word.partOfSpeech = req.body[item].partOfSpeech;
+          word.kanji = req.body[item].kanji;
+          word.level = req.body[item].level
+        
+          word.save((err) => {
+            if (err){
+              res.json({ message: '0' });
+            }
+          });
+        });
+      }
+    }
+    
+    res.json({ message: '1' });
   },
   
   showSingle(req, res) {
