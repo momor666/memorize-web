@@ -11,12 +11,12 @@ const wordSchema = new Schema({
   kanji: String,
   level: String, // jlpt n1, jlpt n2 
   isFavorite: { 
-    type: Boolean, 
-    default: false 
+    type: Number, 
+    default: 0 
   },
   isMemorize: { 
-    type: Boolean, 
-    default: false 
+    type: Number, 
+    default: 0 
   },
   created: { 
     type: Date, 

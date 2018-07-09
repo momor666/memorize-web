@@ -53,15 +53,15 @@ module.exports = {
   
   createMulti(req, res) {
     
-    for(var item of req.body) {
+    for(var item of req.body.new) {
       if (req.body.hasOwnProperty(item)) {
         const word = new Word({
-          character: req.body[item].character,
-          meanings: req.body[item].meanings,
-          meaningsMongolia: req.body[item].meaningsMongolia,
-          partOfSpeech: req.body[item].partOfSpeech,
-          kanji: req.body[item].kanji,
-          level: req.body[item].level
+          character: req.body.new[item].character,
+          meanings: req.body.new[item].meanings,
+          meaningsMongolia: req.body.new[item].meaningsMongolia,
+          partOfSpeech: req.body.new[item].partOfSpeech,
+          kanji: req.body.new[item].kanji,
+          level: req.body.new[item].level
         });
         
         word.save((err) => {
@@ -76,16 +76,18 @@ module.exports = {
   },
   
   multiEdit(req, res) {
-    
-    for(var item of req.body) {
+    console.log(req.body.updated);
+    for(var item of req.body.updated) {
       if (req.body.hasOwnProperty(item)) {
-        Word.findOne({ slug: req.body[item].slug }, (err, word) => {
-          word.character = req.body[item].character;
-          word.meanings = req.body[item].meanings;
-          word.meaningsMongolia = req.body[item].meaningsMongolia;
-          word.partOfSpeech = req.body[item].partOfSpeech;
-          word.kanji = req.body[item].kanji;
-          word.level = req.body[item].level
+        Word.findOne({ slug: req.body.updated[item].meanings }, (err, word) => {
+          word.character = req.body.updated[item].character;
+          word.meanings = req.body.updated[item].meanings;
+          word.meaningsMongolia = req.body.updated[item].meaningsMongolia;
+          word.partOfSpeech = req.body.updated[item].partOfSpeech;
+          word.kanji = req.body.updated[item].kanji;
+          word.level = req.body.updated[item].level;
+          word.isFavorite = req.body.updated[item].isFavorite;
+          word.isMemorize = req.body.updated[item].isMemorize;
         
           word.save((err) => {
             if (err){
