@@ -1,5 +1,5 @@
 const WordModel = require('../models/Word');
-
+const async = require('async');
 module.exports = {
 
   showWords(req, res) {
@@ -53,9 +53,9 @@ module.exports = {
   
   createMulti(req, res) {
     
-    var list = JSON.parse(req.body.new);
+    const list = JSON.parse(req.body.new);
     
-    for(var item of list) {
+    async.each(list, function(item, callback){
       const word = new WordModel({
         character: item.character,
         meanings: item.meanings,
@@ -69,19 +69,21 @@ module.exports = {
       
       word.save((err) => {
         if (err) {
-          res.json({ status: 'failed', message: err});
+          res.json(500, { status: 'failed', message: err});
         }
+        callback();
       });
-    }
-  
-    res.json({ status: 'success', message: 'Successfully sync datas '+list.length });
+    }, function (error) {
+      if (error) res.json(500, {error: error});
+      return res.json(201, { status: 'success', message: 'Successfully sync datas '+list.length });
+    });
   },
   
   multiEdit(req, res) {
     
     var list =  JSON.parse(req.body.updated);
     
-    for(var item of list) {
+    async.each(list, function(item, callback){
       WordModel.findOne({ _id: item.id }, (err, word) => {
         word.character = item.character;
         word.meanings = item.meanings;
@@ -96,10 +98,13 @@ module.exports = {
           if (err){
             throw err;
           }
+          callback();
         });
+      }, function (error) {
+      if (error) res.json(500, {error: error});
+      return res.json(201, { status: 'success', message: 'Successfully sync datas '+list.length });
       });
-    }
-    res.json({ message: '1' });
+    });
   },
   
   showSingle(req, res) {
@@ -182,8 +187,6 @@ module.exports = {
             res.redirect('/words/create');
         }
     });
-    
-    
   },
   
   showEdit(req, res) {
