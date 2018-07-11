@@ -1,9 +1,9 @@
-const Word = require('../models/Word');
+const WordModel = require('../models/Word');
 
 module.exports = {
 
   showWords(req, res) {
-    Word.find({}, (err, words) => {
+    WordModel.find({}, (err, words) => {
       if (err) {
         res.status(404);
         res.send('Words not found!');
@@ -18,7 +18,7 @@ module.exports = {
   },
 
   retWords(req, res) {
-    Word.find({}, {__v : 0}, {sort: {character: 1, created: -1}}, function(err, datas){
+    WordModel.find({}, {__v : 0}, {sort: {character: 1, created: -1}}, function(err, datas){
       if (err) {
         res.status(404);
         res.send('Word not found!');
@@ -35,7 +35,7 @@ module.exports = {
   
   apiCreate(req, res) {
 
-    const word = new Word({
+    const word = new WordModel({
       character: req.body.character,
       meanings: req.body.meanings,
       meaningsMongolia: req.body.meaningsMongolia,
@@ -56,7 +56,7 @@ module.exports = {
     
     for(var item of req.body.new) {
       if (req.body.hasOwnProperty(item)) {
-        const word = new Word({
+        const word = new WordModel({
           character: req.body.new[item].character,
           meanings: req.body.new[item].meanings,
           meaningsMongolia: req.body.new[item].meaningsMongolia,
@@ -82,7 +82,7 @@ module.exports = {
     for(var item of list) {
       
       // if (req.body.hasOwnProperty(item)) {
-        Word.findOne({ _id: item.id }, (err, word) => {
+        WordModel.findOne({ _id: item.id }, (err, word) => {
           word.character = item.character;
           word.meanings = item.meanings;
           word.meaningsMongolia = item.meaningsMongolia;
@@ -105,7 +105,7 @@ module.exports = {
   },
   
   showSingle(req, res) {
-    Word.findOne({ _id: req.params.id }, (err, word) => {
+    WordModel.findOne({ _id: req.params.id }, (err, word) => {
       if (err) {
         res.status(404);
         res.send('Word not found!');
@@ -132,9 +132,9 @@ module.exports = {
       { character: "あか", meanings: "red", meaningsMongolia: "улаан", partOfSpeech: "nouns", kanji: "赤", level: "jlpt5"}
     ];
 
-    Word.remove({}, () => {
+    WordModel.remove({}, () => {
       for (word of words) {
-        var newWord = new Word(word);
+        var newWord = new WordModel(word);
         newWord.save();
         
       }
@@ -160,7 +160,7 @@ module.exports = {
       return res.redirect('/words/create');
     }
     
-    const word = new Word({
+    const word = new WordModel({
       character: req.body.character,
       meanings: req.body.meanings,
       meaningsMongolia: req.body.meaningsMongolia,
@@ -168,17 +168,28 @@ module.exports = {
       kanji: req.body.kanji,
       level: req.body.level
     });
-    word.save((err) => {
-      if (err) {
-        throw err;
-      }
-      
-      res.redirect(`/words`);
+    
+    WordModel.find({character : req.body.character}, function (err, docs) {
+        if (!docs.length){
+            word.save((err) => {
+              if (err) {
+                throw err;
+              }
+              
+              res.redirect(`/`);
+            });
+        } else {                
+            console.log('Word exists: ',req.body.character);
+            req.flash('errors', req.body.character+' aleady exists.');
+            res.redirect('/words/create');
+        }
     });
+    
+    
   },
   
   showEdit(req, res) {
-    Word.findOne({ _id: req.params.id }, (err, word) => {
+    WordModel.findOne({ _id: req.params.id }, (err, word) => {
       res.render('edit', {
         word: word,
         user : req.user,
@@ -195,7 +206,7 @@ module.exports = {
       req.flash('errors', errors.map(err => err.msg));
       return res.redirect(`/words/${req.params.id}/edit`);
     }
-    Word.findOne({ _id: req.params.id }, (err, word) => {
+    WordModel.findOne({ _id: req.params.id }, (err, word) => {
       word.character = req.body.character;
       word.meanings = req.body.meanings;
       word.meaningsMongolia = req.body.meaningsMongolia;
@@ -214,14 +225,14 @@ module.exports = {
   },
   
   deleteWord(req, res) {
-    Word.remove({ _id: req.params.id }, (err) => {
+    WordModel.remove({ _id: req.params.id }, (err) => {
       req.flash('success', 'Word deleted!');
       res.redirect('/words');
     });
   },
   
   wordCount(req, res) {
-    Word.count({}, function(error, numOfDocs) {  
+    WordModel.count({}, function(error, numOfDocs) {  
       res.send('Word count '+numOfDocs);
     });
   }

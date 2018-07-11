@@ -1,6 +1,5 @@
 const mongoose = require('mongoose'),
-  Schema = mongoose.Schema,
-  slugutf = require('slug');
+  Schema = mongoose.Schema;
   
 // create a schema
 const wordSchema = new Schema({
