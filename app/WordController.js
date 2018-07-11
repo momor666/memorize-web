@@ -18,7 +18,7 @@ module.exports = {
   },
 
   retWords(req, res) {
-    Word.find({}, {slug : 0, __v : 0}, {sort: {character: 1, created: -1}}, function(err, datas){
+    Word.find({}, {__v : 0}, {sort: {character: 1, created: -1}}, function(err, datas){
       if (err) {
         res.status(404);
         res.send('Word not found!');
@@ -77,33 +77,35 @@ module.exports = {
   },
   
   multiEdit(req, res) {
-    console.log(req.body.updated);
-    for(var item of req.body.updated) {
-      if (req.body.hasOwnProperty(item)) {
-        Word.findOne({ slug: req.body.updated[item].meanings }, (err, word) => {
-          word.character = req.body.updated[item].character;
-          word.meanings = req.body.updated[item].meanings;
-          word.meaningsMongolia = req.body.updated[item].meaningsMongolia;
-          word.partOfSpeech = req.body.updated[item].partOfSpeech;
-          word.kanji = req.body.updated[item].kanji;
-          word.level = req.body.updated[item].level;
-          word.isFavorite = req.body.updated[item].isFavorite;
-          word.isMemorize = req.body.updated[item].isMemorize;
+    
+    var list =  JSON.parse(req.body.updated);
+    for(var item of list) {
+      
+      // if (req.body.hasOwnProperty(item)) {
+        Word.findOne({ _id: item.id }, (err, word) => {
+          word.character = item.character;
+          word.meanings = item.meanings;
+          word.meaningsMongolia = item.meaningsMongolia;
+          word.partOfSpeech = item.partOfSpeech;
+          word.kanji = item.kanji;
+          word.level = item.level;
+          word.isFavorite = item.isFavorite;
+          word.isMemorize = item.isMemorize;
         
           word.save((err) => {
             if (err){
-              res.json({ message: '0' });
+              throw err;
             }
           });
         });
-      }
+      // }
     }
     
     res.json({ message: '1' });
   },
   
   showSingle(req, res) {
-    Word.findOne({ slug: req.params.slug }, (err, word) => {
+    Word.findOne({ _id: req.params.id }, (err, word) => {
       if (err) {
         res.status(404);
         res.send('Word not found!');
@@ -176,7 +178,7 @@ module.exports = {
   },
   
   showEdit(req, res) {
-    Word.findOne({ slug: req.params.slug }, (err, word) => {
+    Word.findOne({ _id: req.params.id }, (err, word) => {
       res.render('edit', {
         word: word,
         user : req.user,
@@ -191,9 +193,9 @@ module.exports = {
     const errors = req.validationErrors();
     if (errors) {
       req.flash('errors', errors.map(err => err.msg));
-      return res.redirect(`/words/${req.params.slug}/edit`);
+      return res.redirect(`/words/${req.params.id}/edit`);
     }
-    Word.findOne({ slug: req.params.slug }, (err, word) => {
+    Word.findOne({ _id: req.params.id }, (err, word) => {
       word.character = req.body.character;
       word.meanings = req.body.meanings;
       word.meaningsMongolia = req.body.meaningsMongolia;
@@ -212,7 +214,7 @@ module.exports = {
   },
   
   deleteWord(req, res) {
-    Word.remove({ slug: req.params.slug }, (err) => {
+    Word.remove({ _id: req.params.id }, (err) => {
       req.flash('success', 'Word deleted!');
       res.redirect('/words');
     });

@@ -21,22 +21,7 @@ const wordSchema = new Schema({
   created: { 
     type: Date, 
     default: Date.now 
-  },
-  slug: {
-    type: String,
-    unique: true
   }
-});
-wordSchema.pre('save', function(next) {
-  this.slug = slugutf(this.meanings, slugutf.defaults.modes['rfc3986'] = {
-      replacement: '-',      // replace spaces with replacement 
-      symbols: true,         // replace unicode symbols or not 
-      remove: null,          // (optional) regex to remove characters 
-      lower: true,           // result in lower case 
-      charmap: slugutf.charmap, // replace special characters 
-      multicharmap: slugutf.multicharmap // replace multi-characters 
-  });
-  next();
 });
 
 const wordModel = mongoose.model('Word', wordSchema);

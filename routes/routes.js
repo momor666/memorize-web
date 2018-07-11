@@ -28,13 +28,12 @@ module.exports = function(app, passport) {
     app.get('/words/create', isLoggedIn, wordController.showCreate);
     app.post('/words/create', isLoggedIn, wordController.processCreate);
     
-    app.get('/words/:slug/edit', isLoggedIn, wordController.showEdit);
-    app.post('/words/:slug', isLoggedIn, wordController.processEdit);
+    app.get('/words/:id/edit', isLoggedIn, wordController.showEdit);
+    app.post('/words/:id', isLoggedIn, wordController.processEdit);
     
-    app.get('/words/:slug/delete', isLoggedIn, wordController.deleteWord);
+    app.get('/words/:id/delete', isLoggedIn, wordController.deleteWord);
     
-    app.get('/words/:slug', isLoggedIn, wordController.showSingle);
-
+    app.get('/words/:id', isLoggedIn, wordController.showSingle);
 
     app.get('/login', function(req, res) {
         res.render('login.ejs', { message: req.flash('loginMessage') }); 
