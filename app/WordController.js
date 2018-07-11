@@ -28,7 +28,6 @@ module.exports = {
       res.setHeader("Access-Control-Allow-Origin", "*");
       res.setHeader("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
       res.setHeader("Access-Control-Allow-Methods", "GET, PUT, POST");
-      console.log(datas);
       res.send("{\"memorize\":"+JSON.stringify(datas, null, " ")+"}");
     });
   },
@@ -54,53 +53,52 @@ module.exports = {
   
   createMulti(req, res) {
     
-    for(var item of req.body.new) {
-      if (req.body.hasOwnProperty(item)) {
-        const word = new WordModel({
-          character: req.body.new[item].character,
-          meanings: req.body.new[item].meanings,
-          meaningsMongolia: req.body.new[item].meaningsMongolia,
-          partOfSpeech: req.body.new[item].partOfSpeech,
-          kanji: req.body.new[item].kanji,
-          level: req.body.new[item].level
-        });
-        
-        word.save((err) => {
-          if (err) {
-            res.json({ message: '0' });
-          }
-        });
-      }
-    }
+    var list = JSON.parse(req.body.new);
     
-    res.json({ message: '1' });
+    for(var item of list) {
+      const word = new WordModel({
+        character: item.character,
+        meanings: item.meanings,
+        meaningsMongolia: item.meaningsMongolia,
+        partOfSpeech: item.partOfSpeech,
+        kanji: item.kanji,
+        level: item.level
+      });
+      
+      console.log(item.character);
+      
+      word.save((err) => {
+        if (err) {
+          res.json({ status: 'failed', message: err});
+        }
+      });
+    }
+  
+    res.json({ status: 'success', message: 'Successfully sync datas '+list.length });
   },
   
   multiEdit(req, res) {
     
     var list =  JSON.parse(req.body.updated);
-    for(var item of list) {
-      
-      // if (req.body.hasOwnProperty(item)) {
-        WordModel.findOne({ _id: item.id }, (err, word) => {
-          word.character = item.character;
-          word.meanings = item.meanings;
-          word.meaningsMongolia = item.meaningsMongolia;
-          word.partOfSpeech = item.partOfSpeech;
-          word.kanji = item.kanji;
-          word.level = item.level;
-          word.isFavorite = item.isFavorite;
-          word.isMemorize = item.isMemorize;
-        
-          word.save((err) => {
-            if (err){
-              throw err;
-            }
-          });
-        });
-      // }
-    }
     
+    for(var item of list) {
+      WordModel.findOne({ _id: item.id }, (err, word) => {
+        word.character = item.character;
+        word.meanings = item.meanings;
+        word.meaningsMongolia = item.meaningsMongolia;
+        word.partOfSpeech = item.partOfSpeech;
+        word.kanji = item.kanji;
+        word.level = item.level;
+        word.isFavorite = item.isFavorite;
+        word.isMemorize = item.isMemorize;
+      
+        word.save((err) => {
+          if (err){
+            throw err;
+          }
+        });
+      });
+    }
     res.json({ message: '1' });
   },
   
