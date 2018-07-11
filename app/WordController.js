@@ -81,7 +81,7 @@ module.exports = {
   
   multiEdit(req, res) {
     
-    var list =  JSON.parse(req.body.updated);
+    const list =  JSON.parse(req.body.updated);
     
     async.each(list, function(item, callback){
       WordModel.findOne({ _id: item.id }, (err, word) => {
@@ -137,7 +137,7 @@ module.exports = {
 
     WordModel.remove({}, () => {
       for (word of words) {
-        var newWord = new WordModel(word);
+        const newWord = new WordModel(word);
         newWord.save();
         
       }
