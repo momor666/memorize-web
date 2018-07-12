@@ -43,17 +43,27 @@ module.exports = {
       level: req.body.level
     });
     
-    word.save((err) => {
-      if (err) {
-        res.json({ message: '0' });
+    WordModel.find({character : req.body.character}, function (err, docs) {
+      if (!docs.length){
+         word.save((err) => {
+          if (err) {
+            res.json({ status: 'failed', message: err});
+          }
+          res.json({ status: 'success', message: 'Success'});
+        });
+      } else {                
+        res.json({ status: 'duplicated', message: 'Already exists', character: req.body.character});
       }
-      res.json({ message: '1' });
     });
   },
   
   createMulti(req, res) {
     
     const list = JSON.parse(req.body.new);
+    
+    var success = 0; 
+    var failed = 0; 
+    var duplicated = 0;
     
     async.each(list, function(item, callback){
       const word = new WordModel({
@@ -65,17 +75,23 @@ module.exports = {
         level: item.level
       });
       
-      console.log(item.character);
-      
-      word.save((err) => {
-        if (err) {
-          res.json({ status: 'failed', message: err});
+      WordModel.find({character : item.character}, function (err, docs) {
+        if (!docs.length){
+          word.save((err) => {
+            if (err) {
+              failed++;
+            }
+            success++;
+            callback();
+          });
+        } else {      
+          duplicated++;
+          callback();
         }
-        callback();
       });
     }, function (error) {
-      if (error) res.json({error: error});
-      return res.json({ status: 'success', message: 'Successfully sync datas '+list.length });
+      if (error) res.json({status: 'failed', message: error});
+      return res.json({ status: 'success', message: 'Successfully send server. Success: '+success+' Failed: '+failed+' Duplicated: '+duplicated});
     });
   },
 
@@ -181,19 +197,19 @@ module.exports = {
     });
     
     WordModel.find({character : req.body.character}, function (err, docs) {
-        if (!docs.length){
-            word.save((err) => {
-              if (err) {
-                throw err;
-              }
-              
-              res.redirect(`/`);
-            });
-        } else {                
-            console.log('Word exists: ',req.body.character);
-            req.flash('errors', req.body.character+' aleady exists.');
-            res.redirect('/words/create');
-        }
+      if (!docs.length){
+          word.save((err) => {
+            if (err) {
+              throw err;
+            }
+            
+            res.redirect(`/`);
+          });
+      } else {                
+          console.log('Word exists: ',req.body.character);
+          req.flash('errors', req.body.character+' aleady exists.');
+          res.redirect('/words/create');
+      }
     });
   },
   
