@@ -69,22 +69,28 @@ module.exports = {
       
       word.save((err) => {
         if (err) {
-          res.json(500, { status: 'failed', message: err});
+          res.json({ status: 'failed', message: err});
         }
         callback();
       });
     }, function (error) {
-      if (error) res.json(500, {error: error});
-      return res.json(201, { status: 'success', message: 'Successfully sync datas '+list.length });
+      if (error) res.json({error: error});
+      return res.json({ status: 'success', message: 'Successfully sync datas '+list.length });
     });
   },
-  
-  multiEdit(req, res) {
-    
-    const list =  JSON.parse(req.body.updated);
-    
-    async.each(list, function(item, callback){
-      WordModel.findOne({ _id: item.id }, (err, word) => {
+
+  editMulti(req, res){
+    const updatedList = JSON.parse(req.body.updated);
+     async.each(updatedList, function(item, callback){
+      
+      const query = WordModel.where({ _id: item.id });
+      query.findOne(function(err, word){
+        
+        if (err) {
+          res.status(404);
+          res.json({ status: 'failed', message: err});
+        }
+        
         word.character = item.character;
         word.meanings = item.meanings;
         word.meaningsMongolia = item.meaningsMongolia;
@@ -93,17 +99,19 @@ module.exports = {
         word.level = item.level;
         word.isFavorite = item.isFavorite;
         word.isMemorize = item.isMemorize;
-      
+        
         word.save((err) => {
-          if (err){
-            throw err;
+          if (err) {
+            res.json({ status: 'failed', message: err});
           }
           callback();
         });
-      }, function (error) {
-      if (error) res.json(500, {error: error});
-      return res.json(201, { status: 'success', message: 'Successfully sync datas '+list.length });
       });
+    }, function(error){
+      if (error) {
+        res.json({status: 'failed', message: error});
+      }
+      return res.json({ status: 'success', message: 'Successfully sync datas '+updatedList.length }); 
     });
   },
   
